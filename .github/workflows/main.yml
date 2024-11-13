@@ -23,3 +23,9 @@ jobs:
           python server.py &
           echo "Waiting for Flask server to start"
           sleep 30
+      - name: Run Locust tests
+        env:
+            LOCUST_HOST: http://127.0.0.1:5000
+        run: |
+          echo "Starting Locust tests"
+          locust -f locustfile.py --headless -u 1000 -r 10 --host $LOCUST_HOST --run-time 2m
